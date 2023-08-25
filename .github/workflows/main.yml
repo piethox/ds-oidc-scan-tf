@@ -1,5 +1,5 @@
 name: OIDC test
-run-name: ${{ github.actor }} is doing CICD for serverless application with OIDC
+run-name: ${{ github.actor }} is doing OIDC Test
 
 on:
   pull_request:
