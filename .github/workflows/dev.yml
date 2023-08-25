@@ -1,4 +1,4 @@
-name: OIDC test only deploy on prod
+name: OIDC test only on DEV
 run-name: ${{ github.actor }} is doing OIDC Test
 
 on:
