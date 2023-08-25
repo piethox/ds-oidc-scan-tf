@@ -3,13 +3,7 @@ run-name: ${{ github.actor }} is doing CICD for serverless application with OIDC
 
 on:
   pull_request:
-    branches: 
-      - dev
-      - uat
-      - prod
-
-    types:
-      - closed
+    branches: ["dev","uat","prod"]
 
 env:
   AWS_REGION: "ap-southeast-1"
