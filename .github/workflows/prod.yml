@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is doing OIDC Test
 
 on:
   pull_request:
-    branches: [ "*" ]
+    branches: [ "prod" ]
 
 env:
   AWS_REGION: "ap-southeast-1"
