@@ -22,7 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Run NPM clean install
         run: npm ci
-      - name: configure aws credentials
+      - name: Config AWS Credential with OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::255945442255:role/ds-oidc-prod
