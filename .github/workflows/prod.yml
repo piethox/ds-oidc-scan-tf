@@ -27,7 +27,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::255945442255:role/ds-oidc-prod
           aws-region: ${{ env.AWS_REGION }}     
-     - name: serverless deploy
+      - name: serverless deploy
         uses: serverless/github-action@v3.2
         with:
           args: deploy
