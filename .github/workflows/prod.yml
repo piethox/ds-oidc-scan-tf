@@ -20,6 +20,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: ./backend-operations/package-lock.json
+      - name: Create env file
+        run: |
+          touch ./backend-operations/.env
+          echo JWKS_URI=${{secrets.JWKS_URI}} >> ./backend-operations/.env
+          echo AUDIENCE=${{ secrets.AUDIENCE }} >> ./backend-operations/.env
+          echo TOKEN_ISSUER=${{ secrets.TOKEN_ISSUER }} >> ./backend-operations/.env
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -31,5 +39,7 @@ jobs:
         run: npm ci
       - name: Install Serverless Framework
         run: npm install -g serverless
+      - name: Serverless Authentication
+        run: sls config credentials --provider aws --key ${{ env.AWS_ACCESS_KEY_ID }} --secret ${{ env.AWS_SECRET_ACCESS_KEY }}
       - name: Serverless Deploy
         run: serverless deploy --stage prod --verbose
