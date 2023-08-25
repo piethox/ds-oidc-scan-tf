@@ -1,4 +1,4 @@
-name: OIDC on DEV branch push
+name: OIDC test
 run-name: ${{ github.actor }} is doing CICD for serverless application with OIDC
 
 on:
@@ -9,7 +9,7 @@ on:
       - prod
 
     types:
-      - merged
+      - closed
 
 env:
   AWS_REGION: "ap-southeast-1"
