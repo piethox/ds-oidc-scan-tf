@@ -1,0 +1,75 @@
+name: OIDC on DEV branch push
+run-name: ${{ github.actor }} is doing CICD for serverless application with OIDC
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ prod ]
+
+env:
+  AWS_REGION: "ap-southeast-1"
+
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
+
+jobs:
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job is automatically triggered by a ${{ github.event_name }} event."
+
+  install-dependencies:
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v3
+      - name: Run installation of dependencies command
+        run: npm install
+
+  unit-testing:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v3
+      - name: Run installation of dependencies command
+        run: npm install
+      - name: Run unit testing
+        run: npm test
+
+  package-scan:
+    runs-on: ubuntu-latest
+    needs: unit-testing
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v3
+      - name: Run installation of dependencies command
+        run: npm install
+      - name: Run unit testing
+        run: npm test
+      - name: Run package scanning
+        run: npm audit
+
+  deploy-serverless:
+    if: "contains(github.ref, 'prod')"
+      runs-on: ubuntu-latest
+      needs: package-scan
+      steps:
+        - uses: actions/checkout@v3
+        - name: use node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: Run NPM clean install
+          run: npm ci
+        - name: configure aws credentials
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+            role-to-assume: <arn:aws:iam::255945442255:role/ds-oidc-prod>
+            role-session-name: GitHub_to_AWS_via_FederatedOIDC
+            aws-region: ${{ env.AWS_REGION }}     
+        - name: Serverless Deployment
+          run: sls deploy
