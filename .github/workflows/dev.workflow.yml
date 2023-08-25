@@ -2,10 +2,8 @@ name: OIDC on DEV branch push
 run-name: ${{ github.actor }} is doing CICD for serverless application with OIDC
 
 on:
-  push:
-    branches: [ dev ]
   pull_request:
-    branches: [ prod ]
+    branches: [ dev , uat , prod ]
 
 env:
   AWS_REGION: "ap-southeast-1"
