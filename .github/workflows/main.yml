@@ -52,21 +52,21 @@ jobs:
 
   deploy-serverless:
     if: "contains(github.ref, 'prod')"
-      runs-on: ubuntu-latest
-      needs: package-scan
-      steps:
-        - uses: actions/checkout@v3
-        - name: use node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.node-version }}
-        - name: Run NPM clean install
-          run: npm ci
-        - name: configure aws credentials
-          uses: aws-actions/configure-aws-credentials@v2
-          with:
-            role-to-assume: <arn:aws:iam::255945442255:role/ds-oidc-prod>
-            role-session-name: GitHub_to_AWS_via_FederatedOIDC
-            aws-region: ${{ env.AWS_REGION }}     
-        - name: Serverless Deployment
-          run: sls deploy
+    runs-on: ubuntu-latest
+    needs: package-scan
+    steps:
+      - uses: actions/checkout@v3
+      - name: use node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run NPM clean install
+        run: npm ci
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: <arn:aws:iam::255945442255:role/ds-oidc-prod>
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}     
+      - name: Serverless Deployment
+        run: sls deploy
