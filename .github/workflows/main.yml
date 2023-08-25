@@ -64,8 +64,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: <arn:aws:iam::255945442255:role/ds-oidc-prod>
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          role-to-assume: arn:aws:iam::255945442255:role/ds-oidc-prod
           aws-region: ${{ env.AWS_REGION }}     
       - name: Serverless Deployment
         run: sls deploy
