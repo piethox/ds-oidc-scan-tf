@@ -1,4 +1,4 @@
-name: OIDC test only deploy on PROD
+name: OIDC test only deploy on PROD ENV
 run-name: ${{ github.actor }} is doing Serverless Deployment with OIDC
 
 on:
