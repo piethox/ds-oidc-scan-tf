@@ -1,4 +1,4 @@
-service: david-OIDC
+service: ds-oidc
 frameworkVersion: '3'
 
 provider:
