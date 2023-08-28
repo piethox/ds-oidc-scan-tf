@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "sctp-ce2-tfstate-bkt"
-    key    = "grp2-chat-oidc-test.tfstate"
+    key    = "ds2-test-chat.tfstate"
     region = "ap-southeast-1"
   }
 }
