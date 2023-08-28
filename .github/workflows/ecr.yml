@@ -74,7 +74,7 @@ jobs:
         run: |
           cd ecs
           terraform init
-          terraform apply -auto-approve -target=aws_ecs_cluster.ds2-test-cluster -target=aws_ecs_task_definition.ds2-test-td -target=aws_security_group.ds2-test-sg -target=aws_ecs_service.ds2-test-service
+          terraform apply -auto-approve -target=aws_ecs_cluster.ds2-test-cluster -target=aws_ecs_task_definition.ds2-test-td -target=aws_security_group.ds2-ecs-sg -target=aws_ecs_service.ds2-test-service
       - name: Set up Terraform outputs
         id: tf-outputsgit
         working-directory: ./ecs
