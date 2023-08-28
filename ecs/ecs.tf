@@ -1,9 +1,9 @@
-resource "aws_ecs_cluster" "grp2-chat-oidc" {
-  name = "grp2-chat-oidc-cluster"
+resource "aws_ecs_cluster" "ds2-test-oidc" {
+  name = "ds2-test-oidc-cluster"
 }
 
-resource "aws_ecs_task_definition" "grp2-oidc-app" {
-  family = "grp2-oidc-app-td"
+resource "aws_ecs_task_definition" "ds2-test-app" {
+  family = "ds2-test-app-td"
   network_mode = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu = "512"
@@ -14,18 +14,11 @@ resource "aws_ecs_task_definition" "grp2-oidc-app" {
 
 resource "aws_security_group" "ecs-sg" {
   vpc_id = var.vpc_id
-  name = "grp2-iodc-sg"
+  name = "ds2-test-sg"
   
   ingress {
-    from_port = 0
-    to_port = 65535
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 3000
+    to_port = 3000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -39,10 +32,10 @@ resource "aws_security_group" "ecs-sg" {
   }
 }
 
-resource "aws_ecs_service" "grp2-chat-service" {
-  name = "grp2-chat-app-service"
-  cluster = aws_ecs_cluster.grp2-chat-oidc.id
-  task_definition = aws_ecs_task_definition.grp2-oidc-app.arn
+resource "aws_ecs_service" "ds2-test-service" {
+  name = "ds2-test-app-service"
+  cluster = aws_ecs_cluster.ds2-test-oidc.id
+  task_definition = aws_ecs_task_definition.ds2-test-app.arn
   launch_type = "FARGATE"
   depends_on = [ aws_security_group.ecs-sg ]
   desired_count = 1
