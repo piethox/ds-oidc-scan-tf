@@ -17,8 +17,8 @@ resource "aws_security_group" "ds2-ecs-sg" {
   name = "ds2-ecs-sg"
   
   ingress {
-    from_port = 3000
-    to_port = 3000
+    from_port = 3030
+    to_port = 3030
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
