@@ -15,7 +15,6 @@ permissions:
 jobs:
   snyk-terraform-scan:
     runs-on: ubuntu-latest
-    needs: job-get-aws-info-workflow
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check configuration files for security issues
