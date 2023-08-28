@@ -1,3 +1,3 @@
 resource "aws_ecr_repository" "ecr" {
-  name = "grp2-oidc-ecr"
+  name = "ds2-test-ecr"
 }
