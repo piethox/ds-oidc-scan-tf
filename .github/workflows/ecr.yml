@@ -15,6 +15,7 @@ permissions:
 jobs:
   snyk-terraform-scan:
     runs-on: ubuntu-latest
+    needs: job-get-aws-info-workflow
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check configuration files for security issues
@@ -25,18 +26,18 @@ jobs:
         with:
           file: .
           args: --severity-threshold=high
-            --sarif-file-output=terraform.snyk.scan
+            --sarif-file-output=ds-tf.snyk.scan
           sarif: false
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: application/${{ matrix.repository }}
+          sarif_file: ds-tf.snyk.scan
 
 
   build-and-push-image-to-ecr:
     runs-on: ubuntu-latest
     # Make sure to run after the "job-get-aws-info-workflow" job.
-    needs: job-get-aws-info-workflow
+    needs: snyk-terraform-scan
     name: Build and Push Docker Image to ECR
     steps:
       - name: Checkout repo code
