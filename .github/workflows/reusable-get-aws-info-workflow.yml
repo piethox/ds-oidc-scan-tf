@@ -39,8 +39,6 @@ jobs:
               ENV_FILE="env_var/prod"            
             elif [[ ${{ github.ref }} == 'refs/heads/stage' ]]; then
               ENV_FILE="env_var/stage"
-            elif [[ ${{ github.ref }} == 'refs/heads/feature/*' ]]; then
-              ENV_FILE="env_var/feature"
             else
               ENV_FILE="env_var/dev"
             fi
