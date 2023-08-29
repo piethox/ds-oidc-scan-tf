@@ -28,7 +28,7 @@ jobs:
         with:
           file: .
           args: --report
-           -- severity-threshold=hight
+           --severity-threshold=high
            --sarif-file-output=snyk.sarif
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
