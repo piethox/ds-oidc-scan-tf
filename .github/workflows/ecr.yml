@@ -5,8 +5,7 @@ on:
   push:
     branches: 
       - dev
-      - feature-app
-      - feature/*      
+
   workflow_dispatch:  
 
 permissions:
@@ -28,13 +27,11 @@ jobs:
         with:
           file: .
           args: --report
-           --severity-threshold=high
            --sarif-file-output=snyk.sarif
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
-
 
 #  terrascan_job:
 #    runs-on: ubuntu-latest
