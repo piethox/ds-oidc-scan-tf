@@ -16,38 +16,45 @@ permissions:
   contents: read
 
 jobs:
-  #snyk-terraform-scan:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v2
-  #    - name: Run Snyk to check configuration files for security issues
-  #      continue-on-error: true
-  #      uses: snyk/actions/iac@master
-  #      env:
-  #        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  #      with:
-  #        file: .
-  #        args: --report
-
-  terrascan_job:
+  snyk-terraform-scan:
     runs-on: ubuntu-latest
-    name: terrascan-action
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Run Terrascan
-      id: terrascan
-      uses: accurics/terrascan-action@main
-      with:
-        iac_type: 'terraform'
-        iac_version: 'v14'
-        policy_type: 'aws'
-        only_warn: true
-        sarif_upload: true
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check configuration files for security issues
+        continue-on-error: true
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: .
+          args: --report
+           -- severity-threshold=hight
+           --sarif-file-output=snyk.iac.sarif
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: terrascan.sarif
+        sarif_file: snyk.iac.sarif
+
+
+#  terrascan_job:
+#    runs-on: ubuntu-latest
+#    name: terrascan-action
+#    steps:
+#    - name: Checkout repository
+#      uses: actions/checkout@v2
+#    - name: Run Terrascan
+#      id: terrascan
+#      uses: accurics/terrascan-action@main
+#      with:
+#        iac_type: 'terraform'
+#        iac_version: 'v14'
+#        policy_type: 'aws'
+#        only_warn: true
+#        sarif_upload: true
+#    - name: Upload SARIF file
+#      uses: github/codeql-action/upload-sarif@v1
+#      with:
+#        sarif_file: terrascan.sarif
 
 #  build-and-push-image-to-ecr:
 #    runs-on: ubuntu-latest
