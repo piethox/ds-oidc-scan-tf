@@ -1,4 +1,4 @@
-#use node.js with latest version
+#use nodejs with latest version
 FROM node:latest
 
 #set working directory
@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 #expose port
-EXPOSE 3030
+EXPOSE 3000
 
 #start the app
 CMD ["npm", "start"]

@@ -9,23 +9,33 @@ on:
     outputs:
       role_to_assume:
         description: "role_to_assume"
-        value: ${{ jobs.job-get-aws-info.outputs.role_to_assume }}
+        value: ${{ jobs.aws-config-fetcher.outputs.role_to_assume }}
       aws_region:
         description: "aws_region"
-        value: ${{ jobs.job-get-aws-info.outputs.aws_region }}
+        value: ${{ jobs.aws-config-fetcher.outputs.aws_region }}
+      image_name:
+        description: "image_name"
+        value: ${{ jobs.aws-config-fetcher.outputs.image_name }}
+      environment:
+        description: "environment"
+        value: ${{ jobs.aws-config-fetcher.outputs.environment }}
 
 jobs:
-  # Define a job named "job-get-aws-info" that runs on the latest version of Ubuntu.
-  job-get-aws-info:
+  # Define a job named "aws-config-fetcher" that runs on the latest version of Ubuntu.
+  aws-config-fetcher:
     runs-on: ubuntu-latest
 
     # Define the outputs of this job that will be used in other workflows.
     outputs:
       role_to_assume: ${{steps.step-get-aws-info.outputs.role_to_assume}}
       aws_region: ${{steps.step-get-aws-info.outputs.aws_region}}
+      image_name: ${{steps.step-get-aws-info.outputs.image_name}}
+      environment: ${{steps.step-get-aws-info.outputs.environment}}
+        
+
     steps:
       # Checkout the repository code.
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v3 
 
       # Define a step named "Determine Environment and Set AWS Credentials." 
       - name: Determine Environment and Set AWS Credentials
@@ -58,6 +68,12 @@ jobs:
             # Output the variables for later use.
             echo "role_to_assume=$role_to_assume" >> $GITHUB_OUTPUT
             echo "aws_region=$aws_region" >> $GITHUB_OUTPUT
+            
+            #Environment variables
+            environment=$ENVIRONMENT
+            echo "environment=$environment" >> $GITHUB_OUTPUT
+            image_name=$IMAGE_NAME
+            echo "image_name=$image_name" >> $GITHUB_OUTPUT
         
         # Specify that this script should be executed using Bash.
         shell: bash
