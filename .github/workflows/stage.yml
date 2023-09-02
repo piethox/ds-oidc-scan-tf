@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       access_url_output: ${{ steps.tf-outputs.outputs.access_url }}
-    needs: [ unit-testing, sca-tool-scan, SNYK-Comprehensive-Security-Testing, get-aws-info] # Update if other jobs are added
+    needs: [ get-aws-info, pre-deploy ] # Update if other jobs are added
     name: Deploy to AWS
     env:
       environment: ${{ needs.get-aws-info.outputs.environment }}
