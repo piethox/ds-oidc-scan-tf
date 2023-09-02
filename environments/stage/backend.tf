@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket  = "ce2-dstest-capstone-project-tfstate-bucket"
-    key     = "environments/stage/deploy.tfstate"
+    bucket  = "sctp-ce2-tfstate-bkt"
+    key     = "davids/stage/deploy.tfstate"
     region  = "ap-southeast-1"
   }
 }
