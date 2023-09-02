@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Merge dev into prod
         run: |
-          git checkout prod
+          git checkout -b prod
           git merge dev --no-ff --no-edit
           git push origin prod
           working-directory: ./
