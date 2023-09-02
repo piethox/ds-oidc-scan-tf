@@ -144,4 +144,4 @@ jobs:
           git checkout prod
           git merge dev --no-ff --no-edit
           git push origin prod
-        working-directory: ./
+          working-directory: ./
